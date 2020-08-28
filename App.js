@@ -63,6 +63,7 @@ function  StartView ()  {
 function App() {
   return (
     <NavigationContainer>    
+      <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider  {...eva} theme={{ ...eva.dark}}>
 <StartView></StartView>
       </ApplicationProvider>

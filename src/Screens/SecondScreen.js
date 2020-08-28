@@ -5,9 +5,9 @@ import {TopNavigation, Layout } from "@ui-kitten/components";
 
 const FirstScreen = () => {
     return (
-<Layout style={{ flex: 1 }}>
-			<SafeAreaView style={{ backgroundColor: '#1b1b1b' }}>
-				<TopNavigation style={{ backgroundColor: '#1b1b1b' }} title="Second View" alignment="center" />
+<Layout>
+			<SafeAreaView>
+				<TopNavigation title="Second View" alignment="center" />
 			</SafeAreaView>
 		</Layout>
     )

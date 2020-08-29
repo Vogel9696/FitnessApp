@@ -1,73 +1,74 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import SecondScreen from "./src/Screens/SecondScreen";
 import FirstScreen from "./src/Screens/FirstScreen";
 import ThirdScreen from "./src/Screens/ThirdScreen";
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import "react-native-gesture-handler";
 import * as eva from "@eva-design/eva";
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { ApplicationProvider, IconRegistry, Layout } from "@ui-kitten/components";
+import { ApplicationProvider, IconRegistry, BottomNavigation, BottomNavigationTab, Icon } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const Tab = createMaterialBottomTabNavigator();
+const { Navigator, Screen } = createBottomTabNavigator();
 
+const PlanIcon = (props) => (
+  <Icon {...props} name='map-outline' />
+);
 
-function  StartView ()  {
+const BellIcon = (props) => (
+  <Icon {...props} name='copy-outline' />
+);
+
+const AnalyticsIcon = (props) => (
+  <Icon {...props} name='activity-outline' />
+);
+
+const useBottomNavigationState = (initialState = 0) => {
+  const [selectedIndex, setSelectedIndex] = React.useState(initialState);
+  return { selectedIndex, onSelect: setSelectedIndex };
+};
+
+function StartView() {
+
+  const topState = useBottomNavigationState();
+  const bottomState = useBottomNavigationState();
+
+  const BottomTabBar = ({ navigation, state }) => (
+    <BottomNavigation
+      selectedIndex={state.index}
+      onSelect={index => navigation.navigate(state.routeNames[index])}>
+      <BottomNavigationTab title='Plan' icon={PlanIcon} />
+      <BottomNavigationTab title='ORDERS' icon={BellIcon} />
+      <BottomNavigationTab title='Analytics' icon={AnalyticsIcon} />
+    </BottomNavigation>
+  );
+
+  const TabNavigator = () => (
+    <Navigator tabBar={props => <BottomTabBar {...props} />}>
+      <Screen name='Plan' component={FirstScreen} />
+      <Screen name='Orders' component={SecondScreen} />
+      <Screen name='Analytics' component={ThirdScreen} />
+    </Navigator>
+  );
   return (
-    <Tab.Navigator
-      initialRouteName="FirstView"
-      activeColor="white"
-      inactiveColor="#616161"
-      labelStyle={{ fontSize: 12 }}
-      barStyle={{backgroundColor: '#1b1b1b'}}
-    >
-      <Tab.Screen
-        name="Plan"
-        component={FirstScreen}
-        options={{
-          tabBarLabel: '1',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="SecondView"
-        component={SecondScreen}
-        options={{
-          tabBarLabel: '2',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
-          ),
-        }}
-      />
-        <Tab.Screen
-        name="ThirdView"
-        component={ThirdScreen}
-        options={{
-          tabBarLabel: '3',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+    <TabNavigator />
   );
 }
 
 
 function App() {
   return (
-    <NavigationContainer>    
+    <>
       <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider  {...eva} theme={{ ...eva.dark}}>
-<StartView></StartView>
-      </ApplicationProvider>
-    </NavigationContainer>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#212121' }}>
+        <ApplicationProvider  {...eva} theme={{ ...eva.dark }}>
+          <NavigationContainer >
+            <StartView ></StartView>
+          </NavigationContainer>
+        </ApplicationProvider>
+      </SafeAreaView>
+    </>
   );
 }
 
@@ -79,5 +80,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  bottomNavigation: {
+    marginVertical: 8,
   },
 });

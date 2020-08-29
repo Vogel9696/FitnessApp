@@ -1,61 +1,51 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, SafeAreaView, View } from "react-native";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-
-import { TopNavigation, Layout,TopNavigationAction, Icon ,Card, Modal, Text,Input } from "@ui-kitten/components";
+import React from "react";
+import { StyleSheet, SafeAreaView} from "react-native";
+import { TopNavigation, Layout, TopNavigationAction, Icon, Card, Modal, Text, Input } from "@ui-kitten/components";
 import { Button } from "react-native-paper";
 
 const EditIcon = (props) => (
-	<Icon {...props} name='plus'/>
-  );
+	<Icon {...props} name='plus' />
+);
 
-  const FirstScreen = () => {
+const FirstScreen = () => {
 
 	const renderBackAction = () => (
 		<TopNavigationAction icon={EditIcon} onPress={() => setVisible(true)} />
-	  );
+	);
 
-	  const [visible, setVisible] = React.useState(false);
-	  const [planName, setPlanName] = React.useState('');
+	const [visible, setVisible] = React.useState(false);
+	const [planName, setPlanName] = React.useState('');
 
 
 	return (
-		<Layout style={{ flex: 1 }}>
-			<SafeAreaView style={{ backgroundColor: '#1b1b1b' }}>
+		<Layout>
+			<SafeAreaView>
+				<TopNavigation
+					title="Plan"
+					alignment="center"
+					accessoryRight={renderBackAction}
 
-				<TopNavigation 
-				style={{ backgroundColor: '#1b1b1b' }} 
-				title="Plan"
-				 alignment="center"
-				 accessoryRight={renderBackAction}
-				 subtitle="test"
-				 >
+				>
 				</TopNavigation>
-				
+
 				<Modal
-        visible={visible}
-        backdropStyle={styles.backdrop}
-		style={{width: '80%'}}>
-        <Card style={{display: 'flex'}} disabled={true}>
-          <Text>Create your plan.</Text>
+					visible={visible}
+					backdropStyle={styles.backdrop}
+					style={{ width: '80%' }}>
+					<Card style={{ display: 'flex' }} disabled={true}>
+						<Text>Create your plan.</Text>
+						<Input
+							placeholder='Name your Plan'
+							value={planName}
+							onChangeText={nextValue => setPlanName(nextValue)}>
+						</Input>
 
-		  <Input
-      placeholder='Name your Plan'
-      value={planName}
-      onChangeText={nextValue => setPlanName(nextValue)}
-    />
-		<Layout style={{justifyContent: 'space-around', display:'flex'}}>
-		<Button onPress={() => setVisible(false)}>
-            Save
-          </Button>
-		  <Button onPress={() => setVisible(false)}>
-            Cancel
-          </Button>
-		</Layout>
-        </Card>
-      </Modal>
-
+						<Layout style={{ justifyContent: 'space-around', display: 'flex' }}>
+							<Button onPress={() => setVisible(false)}>Save</Button>
+							<Button onPress={() => setVisible(false)}>Cancel</Button>
+						</Layout>
+					</Card>
+				</Modal>
 
 			</SafeAreaView>
 		</Layout>
@@ -65,11 +55,17 @@ const EditIcon = (props) => (
 
 const styles = StyleSheet.create({
 	container: {
-	  minHeight: 128,
+		flex: 1,
+		flexDirection: 'row',
 	},
 	backdrop: {
 		backgroundColor: 'rgba(0, 0, 0, 0.5)',
-	  },
-  });
+	},
+	layout: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+});
 
-  export default FirstScreen;
+export default FirstScreen;

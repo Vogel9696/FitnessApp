@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import SecondScreen from "./src/Screens/SecondScreen";
 import FirstScreen from "./src/Screens/FirstScreen";
 import ThirdScreen from "./src/Screens/ThirdScreen";
@@ -12,16 +12,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-const PersonIcon = (props) => (
-  <Icon {...props} name='person-outline' />
+const PlanIcon = (props) => (
+  <Icon {...props} name='map-outline' />
 );
 
 const BellIcon = (props) => (
-  <Icon {...props} name='bell-outline' />
+  <Icon {...props} name='copy-outline' />
 );
 
-const EmailIcon = (props) => (
-  <Icon {...props} name='email-outline' />
+const AnalyticsIcon = (props) => (
+  <Icon {...props} name='activity-outline' />
 );
 
 const useBottomNavigationState = (initialState = 0) => {
@@ -34,14 +34,13 @@ function StartView() {
   const topState = useBottomNavigationState();
   const bottomState = useBottomNavigationState();
 
-
   const BottomTabBar = ({ navigation, state }) => (
     <BottomNavigation
       selectedIndex={state.index}
       onSelect={index => navigation.navigate(state.routeNames[index])}>
-      <BottomNavigationTab title='Plan' icon={PersonIcon} />
-      <BottomNavigationTab title='ORDERS' icon={PersonIcon} />
-      <BottomNavigationTab title='Analytics' icon={PersonIcon} />
+      <BottomNavigationTab title='Plan' icon={PlanIcon} />
+      <BottomNavigationTab title='ORDERS' icon={BellIcon} />
+      <BottomNavigationTab title='Analytics' icon={AnalyticsIcon} />
     </BottomNavigation>
   );
 
@@ -62,11 +61,13 @@ function App() {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider  {...eva} theme={{ ...eva.dark }}>
-        <NavigationContainer >
-          <StartView ></StartView>
-        </NavigationContainer>
-      </ApplicationProvider>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#212121' }}>
+        <ApplicationProvider  {...eva} theme={{ ...eva.dark }}>
+          <NavigationContainer >
+            <StartView ></StartView>
+          </NavigationContainer>
+        </ApplicationProvider>
+      </SafeAreaView>
     </>
   );
 }

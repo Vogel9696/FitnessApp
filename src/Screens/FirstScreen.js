@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, SafeAreaView, View } from "react-native";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-
+import React from "react";
+import { StyleSheet, SafeAreaView} from "react-native";
 import { TopNavigation, Layout, TopNavigationAction, Icon, Card, Modal, Text, Input } from "@ui-kitten/components";
 import { Button } from "react-native-paper";
 
@@ -23,7 +20,6 @@ const FirstScreen = () => {
 	return (
 		<Layout>
 			<SafeAreaView>
-
 				<TopNavigation
 					title="Plan"
 					alignment="center"
@@ -32,32 +28,24 @@ const FirstScreen = () => {
 				>
 				</TopNavigation>
 
-
-
-
 				<Modal
 					visible={visible}
 					backdropStyle={styles.backdrop}
 					style={{ width: '80%' }}>
 					<Card style={{ display: 'flex' }} disabled={true}>
 						<Text>Create your plan.</Text>
-
 						<Input
 							placeholder='Name your Plan'
 							value={planName}
-							onChangeText={nextValue => setPlanName(nextValue)}
-						/>
+							onChangeText={nextValue => setPlanName(nextValue)}>
+						</Input>
+
 						<Layout style={{ justifyContent: 'space-around', display: 'flex' }}>
-							<Button onPress={() => setVisible(false)}>
-								Save
-          </Button>
-							<Button onPress={() => setVisible(false)}>
-								Cancel
-          </Button>
+							<Button onPress={() => setVisible(false)}>Save</Button>
+							<Button onPress={() => setVisible(false)}>Cancel</Button>
 						</Layout>
 					</Card>
 				</Modal>
-
 
 			</SafeAreaView>
 		</Layout>

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, SafeAreaView, Dimensions } from "react-native";
+import { StyleSheet, SafeAreaView, Dimensions, View } from "react-native";
 import { TopNavigation, Layout, TopNavigationAction, Icon, Card, Modal, Text, Input, Divider, List, ListItem, Select, SelectItem, IndexPath } from "@ui-kitten/components";
 import { Button } from "react-native-paper";
 import moment from 'moment';
@@ -55,22 +55,30 @@ const FirstScreen = () => {
 
 	function AddnewPlan() {
 		data.push(new PlanModel(planName, moment().format('DD/MM/YYYY'), getMuscleGroupsFromSelectedMuscles))
-		console.log(data);
 		setVisible(false)
 	}
 
-	const renderItem = ({ item, index }) => (
+	const renderPlanAsCard = ({ item, index }) => (
 
-		<ListItem
-			title={`${item.planName}` + ' - ' + `${item.createDate}`}
-			description={item.muscleGroups.map(r => <Text>{r.muscleGroupName}{'\n'}</Text>)}
-
-			accessoryRight={renderEditPlanAction}
-			style={{ marginLeft: 10, marginRight: 10, marginTop: 10 }}
+		<Card
+		disabled={true}
+			status='primary'
+			style={styles?.card}
+			header={(props) => <View {...props}><Text category='h6'>{item?.planName}</Text></View>}
+			footer={(props) => <View {...props}><Text category='s1'>Created at: {item?.createDate}</Text></View>}
 		>
-		</ListItem>
-
+			<List
+			 contentContainerStyle={styles.contentContainer}
+				data={item?.muscleGroups}
+				renderItem={renderItem}
+			>
+			</List>
+		</Card>
 	);
+
+	const renderItem = ({ item, index }) => (
+		<ListItem disabled={true} title={`${item.muscleGroupName}`}></ListItem>
+	  );
 
 	return (
 		<React.Fragment>
@@ -85,7 +93,7 @@ const FirstScreen = () => {
 			<List
 				style={styles.container}
 				data={data}
-				renderItem={renderItem}
+				renderItem={renderPlanAsCard}
 			>
 			</List>
 
@@ -135,6 +143,14 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
+	card: {
+		flex: 1,
+		margin: 10,
+	},
+	contentContainer: {
+		paddingHorizontal: 8,
+		paddingVertical: 4,
+	  },
 });
 
 export default FirstScreen;

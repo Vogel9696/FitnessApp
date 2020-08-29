@@ -60,17 +60,21 @@ const FirstScreen = () => {
 	}
 
 	const renderItem = ({ item, index }) => (
+
 		<ListItem
-			title={`${item.planName}`}
-			description={`${item.createDate}`}
+			title={`${item.planName}` + ' - ' + `${item.createDate}`}
+			description={item.muscleGroups.map(r => <Text>{r.muscleGroupName}{'\n'}</Text>)}
+
 			accessoryRight={renderEditPlanAction}
 			style={{ marginLeft: 10, marginRight: 10, marginTop: 10 }}
-		></ListItem>
+		>
+		</ListItem>
+
 	);
 
 	return (
 		<React.Fragment>
-			
+
 			<TopNavigation
 				title="Plan"
 				alignment="center"
@@ -82,7 +86,8 @@ const FirstScreen = () => {
 				style={styles.container}
 				data={data}
 				renderItem={renderItem}
-			></List>
+			>
+			</List>
 
 			<Modal
 				visible={visible}

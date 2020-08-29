@@ -4,6 +4,7 @@ import { TopNavigation, Layout, TopNavigationAction, Icon, Card, Modal, Text, In
 import { Button } from "react-native-paper";
 import moment from 'moment';
 import { PlanModel } from '../Models/PlanModel'
+import { MuscleGroupModel } from '../Models/MuscleGroupModel'
 
 const PlusIcon = (props) => (
 	<Icon {...props} name='plus' />
@@ -15,12 +16,34 @@ const EditIcon = (props) => (
 
 const data = new Array();
 
+const dmus = [
+	new MuscleGroupModel(1, 'Chest'),
+	new MuscleGroupModel(2, 'Back'),
+	new MuscleGroupModel(3, 'Legs'),
+	new MuscleGroupModel(4, 'Bizeps'),
+	new MuscleGroupModel(5, 'Trizeps'),
+];
 
 const FirstScreen = () => {
 
 	const [visible, setVisible] = React.useState(false);
 	const [planName, setPlanName] = React.useState('');
+
 	const [selectedIndex, setSelectedIndex] = React.useState([]);
+
+
+	const displayValue = selectedIndex.map(index => {
+		return dmus[index.row].muscleGroupName;
+	});
+
+	const getMuscleGroupsFromSelectedMuscles = selectedIndex.map(index => {
+		return dmus[index.row];
+	});
+
+
+	const renderOption = (title) => (
+		<SelectItem title={title.muscleGroupName} />
+	);
 
 	const renderAddPlanAction = () => (
 		<TopNavigationAction icon={PlusIcon} onPress={() => setVisible(true)} />
@@ -31,33 +54,29 @@ const FirstScreen = () => {
 	);
 
 	function AddnewPlan() {
-		data.push(new PlanModel(planName, moment().format('DD/MM/YYYY')))
-
-		selectedIndex.forEach(element => {
-			console.log(element)
-		});
-
+		data.push(new PlanModel(planName, moment().format('DD/MM/YYYY'), getMuscleGroupsFromSelectedMuscles))
+		console.log(data);
 		setVisible(false)
 	}
 
 	const renderItem = ({ item, index }) => (
 		<ListItem
 			title={`${item.planName}`}
-			description={`Create date: ${item.createDate}`}
+			description={`${item.createDate}`}
 			accessoryRight={renderEditPlanAction}
 			style={{ marginLeft: 10, marginRight: 10, marginTop: 10 }}
-		/>
+		></ListItem>
 	);
 
 	return (
 		<React.Fragment>
+			
 			<TopNavigation
 				title="Plan"
 				alignment="center"
 				accessoryRight={renderAddPlanAction}
 
-			>
-			</TopNavigation>
+			></TopNavigation>
 
 			<List
 				style={styles.container}
@@ -78,12 +97,13 @@ const FirstScreen = () => {
 					</Input>
 
 					<Select
-						multiSelect={true}
+						style={styles.select}
+						placeholder='Default'
+						multiSelect='true'
+						value={displayValue.join(', ')}
 						selectedIndex={selectedIndex}
 						onSelect={index => setSelectedIndex(index)}>
-						<SelectItem title='Option 1' />
-						<SelectItem title='Option 2' />
-						<SelectItem title='Option 3' />
+						{dmus.map(renderOption)}
 					</Select>
 
 					<Layout style={{ justifyContent: 'space-around', display: 'flex' }}>

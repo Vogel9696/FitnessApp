@@ -22,6 +22,7 @@ const dmus = [
 	new MuscleGroupModel(3, 'Legs'),
 	new MuscleGroupModel(4, 'Bizeps'),
 	new MuscleGroupModel(5, 'Trizeps'),
+	new MuscleGroupModel(6, 'Shoulders'),
 ];
 
 const FirstScreen = () => {
@@ -55,20 +56,21 @@ const FirstScreen = () => {
 
 	function AddnewPlan() {
 		data.push(new PlanModel(planName, moment().format('DD/MM/YYYY'), getMuscleGroupsFromSelectedMuscles))
+		console.log(data[0]);
 		setVisible(false)
 	}
 
 	const renderPlanAsCard = ({ item, index }) => (
 
 		<Card
-		disabled={true}
+			disabled={true}
 			status='primary'
 			style={styles?.card}
 			header={(props) => <View {...props}><Text category='h6'>{item?.planName}</Text></View>}
 			footer={(props) => <View {...props}><Text category='s1'>Created at: {item?.createDate}</Text></View>}
 		>
 			<List
-			 contentContainerStyle={styles.contentContainer}
+				contentContainerStyle={styles.contentContainer}
 				data={item?.muscleGroups}
 				renderItem={renderItem}
 			>
@@ -78,7 +80,7 @@ const FirstScreen = () => {
 
 	const renderItem = ({ item, index }) => (
 		<ListItem disabled={true} title={`${item.muscleGroupName}`}></ListItem>
-	  );
+	);
 
 	return (
 		<React.Fragment>
@@ -150,7 +152,7 @@ const styles = StyleSheet.create({
 	contentContainer: {
 		paddingHorizontal: 8,
 		paddingVertical: 4,
-	  },
+	},
 });
 
 export default FirstScreen;

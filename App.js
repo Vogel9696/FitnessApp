@@ -6,7 +6,7 @@ import ThirdScreen from "./src/Screens/ThirdScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import "react-native-gesture-handler";
 import * as eva from "@eva-design/eva";
-import { ApplicationProvider, IconRegistry, BottomNavigation, BottomNavigationTab, Icon } from "@ui-kitten/components";
+import { ApplicationProvider, IconRegistry, BottomNavigation, BottomNavigationTab, Icon ,TopNavigationAction,TopNavigation} from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -39,7 +39,7 @@ function StartView() {
       selectedIndex={state.index}
       onSelect={index => navigation.navigate(state.routeNames[index])}>
       <BottomNavigationTab title='Plan' icon={PlanIcon} />
-      <BottomNavigationTab title='ORDERS' icon={BellIcon} />
+      <BottomNavigationTab title='Tracking' icon={BellIcon} />
       <BottomNavigationTab title='Analytics' icon={AnalyticsIcon} />
     </BottomNavigation>
   );
@@ -47,7 +47,7 @@ function StartView() {
   const TabNavigator = () => (
     <Navigator tabBar={props => <BottomTabBar {...props} />}>
       <Screen name='Plan' component={FirstScreen} />
-      <Screen name='Orders' component={SecondScreen} />
+      <Screen name='Tracking' component={SecondScreen} />
       <Screen name='Analytics' component={ThirdScreen} />
     </Navigator>
   );

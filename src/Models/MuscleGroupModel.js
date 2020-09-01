@@ -1,7 +1,8 @@
 
 export class MuscleGroupModel{
-    constructor(muscleGroupId,muscleGroupName) {
+    constructor(muscleGroupId,muscleGroupName,listOfGymnastics) {
         this.muscleGroupId = muscleGroupId;
         this.muscleGroupName = muscleGroupName;
+        this.listOfGymnastics = listOfGymnastics;
       }
 }

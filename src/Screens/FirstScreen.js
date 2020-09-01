@@ -1,10 +1,13 @@
 import React from "react";
-import { StyleSheet, SafeAreaView, Dimensions, View } from "react-native";
+import { StyleSheet, SafeAreaView, Dimensions, View, FlatList } from "react-native";
 import { TopNavigation, Layout, TopNavigationAction, Icon, Card, Modal, Text, Input, Divider, List, ListItem, Select, SelectItem, IndexPath } from "@ui-kitten/components";
 import { Button } from "react-native-paper";
 import moment from 'moment';
 import { PlanModel } from '../Models/PlanModel'
 import { MuscleGroupModel } from '../Models/MuscleGroupModel'
+import { GymnasticModel } from '../Models/GymnasticModel'
+import { ExecutionModel } from '../Models/ExecutionModel'
+import { SetModel } from '../Models/SetModel'
 
 const PlusIcon = (props) => (
 	<Icon {...props} name='plus' />
@@ -14,7 +17,32 @@ const EditIcon = (props) => (
 	<Icon {...props} name='edit' />
 );
 
-const data = new Array();
+
+const FakeGymnastic1 = [
+	new GymnasticModel(1,'FlachBank SZ'),
+	new GymnasticModel(2,'Dumbbel im stehen')
+]
+
+const FakeGymnastic2 = [
+	new GymnasticModel(1,'FlachBank'),
+	new GymnasticModel(2,'SchrägBank')
+]
+
+const FakeChest = new MuscleGroupModel(1, 'Chest', FakeGymnastic2);
+const FakeTrizeps = new MuscleGroupModel(1, 'Trizeps', FakeGymnastic1);
+
+const ttt = [
+	FakeChest, FakeTrizeps
+]
+
+const FakePlan = new PlanModel('Tag 1', moment().format('DD/MM/YYYY'), ttt);
+
+
+const data = [
+	FakePlan
+]
+
+
 
 const dmus = [
 	new MuscleGroupModel(1, 'Chest'),
@@ -50,10 +78,6 @@ const FirstScreen = () => {
 		<TopNavigationAction icon={PlusIcon} onPress={() => setVisible(true)} />
 	);
 
-	const renderEditPlanAction = () => (
-		<TopNavigationAction icon={EditIcon} />
-	);
-
 	function AddnewPlan() {
 		data.push(new PlanModel(planName, moment().format('DD/MM/YYYY'), getMuscleGroupsFromSelectedMuscles))
 		console.log(data[0]);
@@ -67,20 +91,42 @@ const FirstScreen = () => {
 			status='primary'
 			style={styles?.card}
 			header={(props) => <View {...props}><Text category='h6'>{item?.planName}</Text></View>}
-			footer={(props) => <View {...props}><Text category='s1'>Created at: {item?.createDate}</Text></View>}
+			footer={(props) => <View {...props}><Text category='c1'>Created at: {item?.createDate}</Text></View>}
 		>
-			<List
-				contentContainerStyle={styles.contentContainer}
-				data={item?.muscleGroups}
-				renderItem={renderItem}
-			>
-			</List>
+
+			<FlatList
+				style={{ flex: 1, justifyContent: 'flex-end' }}
+				data={item?.listOfMuscleGroups}
+				renderItem={renderFlatListMuscleGroups}
+				keyExtractor={item => item.muscleGroupId+ `${item.muscleGroupName}`}
+			/>
+
+
+
 		</Card>
 	);
 
-	const renderItem = ({ item, index }) => (
-		<ListItem disabled={true} title={`${item.muscleGroupName}`}></ListItem>
-	);
+	const renderFlatListMuscleGroups = ({ item, index }) => (
+		<>
+			<ListItem
+				title={() => <Text category='h6'>{item.muscleGroupName}</Text>}
+				accessoryRight={() => <TopNavigationAction icon={EditIcon}></TopNavigationAction>}
+			>
+			</ListItem>
+			<FlatList
+				data={item?.listOfGymnastics}
+				renderItem={renderFlatListGymnastics}
+				keyExtractor={item => item.gymnasticName}
+			/>
+		</>
+
+	)
+
+	const renderFlatListGymnastics = ({ item, index }) => (
+		<ListItem
+			title={() => <Text category='s2'>    - {item.gymnasticName}</Text>}
+		></ListItem>
+	)
 
 	return (
 		<React.Fragment>

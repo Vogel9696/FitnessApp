@@ -25,36 +25,12 @@ const MockDatas = [
 ]
 
 const SecondScreen = () => {
-
-	const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(1));
-	const displayValue = MockDatas[selectedIndex.row].planName;
-
-	const renderOption = (title) => (
-		<SelectItem title={title.planName}/>
-	  );
-
-	const renderSelectPlan = () => (
-		<React.Fragment>
-			<Select
-				style={{width: 150}}
-				placeholder='Default'
-				value={displayValue}
-				selectedIndex={selectedIndex}
-				onSelect={index => setSelectedIndex(index)}>
-					 {MockDatas.map(renderOption)}
-			</Select>
-		</React.Fragment>
-
-	);
-
 	return (
 		<React.Fragment>
 			<TopNavigation
 				title="Tracking"
 				alignment='start'
-				accessoryRight={renderSelectPlan}
 			/>
-			<Text>{MockDatas[selectedIndex.row].muscleGroups.length}</Text>
 		</React.Fragment>
 	)
 }

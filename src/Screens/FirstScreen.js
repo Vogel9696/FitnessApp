@@ -15,11 +15,6 @@ const PlusIcon = (props) => (
 	<Icon {...props} name='plus' />
 );
 
-const EditIcon = (props) => (
-	<Icon {...props} name='edit' />
-);
-
-
 const FakeGymnastic1 = [
 	new GymnasticModel(1,'FlachBank SZ'),
 	new GymnasticModel(2,'Dumbbel im stehen')
@@ -90,28 +85,6 @@ const FirstScreen = () => {
 		<TrainingsCard planData={item}  ></TrainingsCard>
 	);
 
-	const renderFlatListMuscleGroups = ({ item, index }) => (
-		<>
-			<ListItem
-				title={() => <Text category='h6'>{item.muscleGroupName}</Text>}
-				accessoryRight={() => <TopNavigationAction icon={EditIcon}></TopNavigationAction>}
-			>
-			</ListItem>
-			<FlatList
-				data={item?.listOfGymnastics}
-				renderItem={renderFlatListGymnastics}
-				keyExtractor={item => item.gymnasticName}
-			/>
-		</>
-
-	)
-
-	const renderFlatListGymnastics = ({ item, index }) => (
-		<ListItem
-			title={() => <Text category='s2'>    - {item.gymnasticName}</Text>}
-		></ListItem>
-	)
-
 	return (
 		<React.Fragment>
 
@@ -174,10 +147,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-	},
-	card: {
-		flex: 1,
-		margin: 10,
 	},
 	contentContainer: {
 		paddingHorizontal: 8,

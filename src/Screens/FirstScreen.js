@@ -6,6 +6,8 @@ import moment from 'moment';
 import { PlanModel } from '../Models/PlanModel'
 import { MuscleGroupModel } from '../Models/MuscleGroupModel'
 import { GymnasticModel } from '../Models/GymnasticModel'
+import TrainingsCard, { TrainingsPlanCardComponent} from '../Components/TrainingPlanCardComponent';
+
 import { ExecutionModel } from '../Models/ExecutionModel'
 import { SetModel } from '../Models/SetModel'
 
@@ -85,25 +87,7 @@ const FirstScreen = () => {
 	}
 
 	const renderPlanAsCard = ({ item, index }) => (
-
-		<Card
-			disabled={true}
-			status='primary'
-			style={styles?.card}
-			header={(props) => <View {...props}><Text category='h6'>{item?.planName}</Text></View>}
-			footer={(props) => <View {...props}><Text category='c1'>Created at: {item?.createDate}</Text></View>}
-		>
-
-			<FlatList
-				style={{ flex: 1, justifyContent: 'flex-end' }}
-				data={item?.listOfMuscleGroups}
-				renderItem={renderFlatListMuscleGroups}
-				keyExtractor={item => item.muscleGroupId+ `${item.muscleGroupName}`}
-			/>
-
-
-
-		</Card>
+		<TrainingsCard planData={item}  ></TrainingsCard>
 	);
 
 	const renderFlatListMuscleGroups = ({ item, index }) => (

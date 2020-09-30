@@ -7,7 +7,7 @@ import { PlanModel } from '../Models/PlanModel'
 import { MuscleGroupModel } from '../Models/MuscleGroupModel'
 import { GymnasticModel } from '../Models/GymnasticModel'
 import TrainingsCard, { TrainingsPlanCardComponent} from '../Components/TrainingPlanCardComponent';
-
+import nextId from "react-id-generator";
 import { ExecutionModel } from '../Models/ExecutionModel'
 import { SetModel } from '../Models/SetModel'
 
@@ -86,6 +86,7 @@ const FirstScreen = () => {
 	);
 
 	return (
+
 		<React.Fragment>
 
 			<TopNavigation
@@ -99,6 +100,7 @@ const FirstScreen = () => {
 				style={styles.container}
 				data={data}
 				renderItem={renderPlanAsCard}
+				keyExtractor={item => 'planCard' + nextId()}
 			>
 			</List>
 

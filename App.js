@@ -61,8 +61,8 @@ function App() {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#212121' }}>
-        <ApplicationProvider  {...eva} theme={{ ...eva.dark }}>
+      <SafeAreaView style={{ flex: 1}}>
+        <ApplicationProvider  {...eva} theme={{ ...eva.light }}>
           <NavigationContainer >
             <StartView ></StartView>
           </NavigationContainer>
@@ -77,7 +77,6 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },

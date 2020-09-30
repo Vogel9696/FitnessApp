@@ -1,9 +1,12 @@
 import React from "react";
 import { View, StyleSheet, FlatList } from "react-native";
 import { TopNavigation, Layout, TopNavigationAction, Icon, Card, Modal, Text, Input, Divider, List, ListItem, Select, SelectItem, IndexPath } from "@ui-kitten/components";
-
+import nextId from "react-id-generator";
+import { Button } from "react-native-paper";
 
 const TrainingsCard = (planData, props) => {
+
+    const [visible, setVisible] = React.useState(false);
 
     console.log(planData.planData.listOfMuscleGroups);
 
@@ -14,6 +17,7 @@ const TrainingsCard = (planData, props) => {
 
     const renderFlatListGymnastics = ({ item, index }) => (
         <ListItem
+
             title={() => <Text category='s2'>    - {item.gymnasticName}</Text>}
         ></ListItem>
     )
@@ -22,23 +26,24 @@ const TrainingsCard = (planData, props) => {
         <>
             <ListItem
                 title={() => <Text category='h6'>{item.muscleGroupName}</Text>}
-                accessoryRight={() => <TopNavigationAction icon={EditIcon}></TopNavigationAction>}
+                accessoryRight={() =>   <TopNavigationAction onPress={() => setVisible(true)}  icon={EditIcon}></TopNavigationAction>}
             >
             </ListItem>
             <FlatList
                 data={item?.listOfGymnastics}
                 renderItem={renderFlatListGymnastics}
-                keyExtractor={item => item.gymnasticName}
+                keyExtractor={item => nextId()}
             />
         </>
-
     )
+
+
 
     return (
         <Card
             disabled={true}
-            status='primary'
             style={styles?.card}
+            keyExtractor={planData.planData.planName}
             header={(props) => <View {...props}><Text category='h6'>{planData.planData.planName}</Text></View>}
             footer={(props) => <View {...props}><Text category='c1'>Created at: {planData.planData.createDate}</Text></View>}
         >
@@ -47,17 +52,17 @@ const TrainingsCard = (planData, props) => {
                 style={styles.card}
                 data={planData.planData.listOfMuscleGroups}
                 renderItem={renderFlatListMuscleGroups}
-                keyExtractor={item => item.muscleGroupId + `${item.muscleGroupName}`}
+                keyExtractor={item => nextId()}
             />
 
-        </Card>
+        </Card>        
     )
 }
 
 const styles = StyleSheet.create({
     card: {
         flex: 1,
-        margin: 10,
+        margin: 10
     },
 });
 
